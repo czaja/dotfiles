@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-Some of my config files (and small tools).
+Config files and small tools.
 
 License
 -------
