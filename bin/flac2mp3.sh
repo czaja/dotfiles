@@ -2,6 +2,7 @@
 
 # flac2mp3 (by Krzysztof Czajkowski - http://czajkowski.edu.pl)
 # Version: 1.2 (08 Jul 2010) 
+# Updates: http://github.com/czaja/dotfiles/
 # Licence: public domain
 # Small tool to convert your loved FLAC files to mp3
 # Requires (in gentoo): media-libs/flac
