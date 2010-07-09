@@ -3,7 +3,7 @@
 # 16.02.2010
 # Special thanks to cla <cla@gentoo.org>, which motivated me to 
 # create a config and from which lent a bit of code.
-# Updates: http://github.com/lidel/dotfiles/
+# Updates: http://github.com/czaja/dotfiles/
 # License: public domain
 
 export ECHANGELOG_USER="Krzysztof Czajkowski <czaja@arker.pl>"
