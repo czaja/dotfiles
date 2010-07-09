@@ -374,6 +374,7 @@ die() {
     return 0
 }
 
+# to update .zshrc from terminal
 updaterc() {
         wget http://github.com/czaja/dotfiles/raw/master/.zshrc -O ${1}/.zshrc
 }
