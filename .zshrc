@@ -375,7 +375,7 @@ die() {
 }
 
 updaterc() {
-        wget http://somehttp/.zshrc -O ${1}/.zshrc
+        wget http://github.com/czaja/dotfiles/raw/master/.zshrc -O ${1}/.zshrc
 }
 
 # distcc options for automake
