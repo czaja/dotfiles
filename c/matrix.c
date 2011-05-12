@@ -1,6 +1,6 @@
 /*
 Krzysztof Czajkowski - http://czajkowski.edu.pl
-http://github.com/czaja/dotfiles/c/
+http://github.com/czaja/dotfiles/tree/master/c
 Licence: public domain
 */
 
