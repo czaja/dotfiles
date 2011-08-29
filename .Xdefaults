@@ -1,14 +1,17 @@
-## urxvt config
+# .Xdefaults
+# Krzysztof Czajkowski - http://czajkowski.edu.pl
+# Updates: http://github.com/czaja/dotfiles/
+# License: public domain
 
 URxvt*termName: rxvt
 URxvt*title: czaja
-URxvt*scrollBar:	false
+URxvt*scrollBar: false
 URxvt*borderLess:	false
 URxvt*inheritPixmap:	true
 URxvt.shading: 25 !trans, 0=opaque
 URxvt.fading: 10 !term unfocus
 Urxvt*geometry: 100x30
-URxvt*tintColor:white
+URxvt*tintColor: white
 Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
