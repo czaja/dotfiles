@@ -254,9 +254,9 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g G="| grep"
 alias -g L="| less"
-alias mv="mv -v"
-alias rm="rm -v"
-alias cp="cp -v"
+alias -g mv="mv -v"
+alias -g rm="rm -v"
+alias -g cp="cp -v"
 alias -g sshl2="luit -x -encoding 'ISO 8859-2' ssh"
 
 # editor
@@ -273,6 +273,14 @@ status() {
         echo "System: $(cat /etc/[A-Za-z]*[_-][rv]e[lr]*)"
         echo "Kernel: $(uname -r)"
 	echo "Uptime:$(uptime)"
+}
+
+# youtube with mplayer
+yt() {
+	cookiefile="/tmp/cookies-$( date +%s.%N ).txt";
+	url=$( youtube-dl --cookies $cookiefile -g "$@" );
+	mplayer2 -cookies -cookies-file $cookiefile $url;
+	rm -f $cookiefile
 }
 
 # create a shot of screen an place it in proper directory
