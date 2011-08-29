@@ -1,0 +1,54 @@
+# .xbindkeysrc
+# by Krzysztof Czajkowski (http://czajkowski.edu.pl)
+# thanks liDEL (http://lidel.org)
+# Updates: http://github.com/czaja/dotfiles/
+# License: public domain
+
+# terminal
+"urxvtc"
+	 Mod2 + Menu
+
+# sound control
+"pavucontrol"
+	 Mod2 + F1
+
+# file manager
+"pcmanfm"
+    m:0x50 + c:133 #Mod2+Mod4 + Super_L
+
+# suspend 2 ram
+"xtrlock & purple-remote 'setstatus?status=offline' & mpc stop & /home/czaja/bin/vaio-s2ram.sh "
+	 Mod2 + XF86Suspend
+
+# volume
+"/home/czaja/bin/pa-volume-ctl.sh down"
+    XF86AudioLowerVolume
+"/home/czaja/bin/pa-volume-ctl.sh up"
+    XF86AudioRaiseVolume
+"/home/czaja/bin/pa-volume-ctl.sh mute"
+    XF86AudioMute
+
+# mpd
+"mpc prev"
+    XF86AudioPrev
+"mpc toggle"
+    XF86AudioPlay
+"mpc stop"
+    XF86AudioStop
+"mpc next"
+    XF86AudioNext
+
+# simple screen lock
+"mpc disable 2 & mpc stop & purple-remote 'setstatus?status=away' & xscreensaver-command -lock ; purple-remote 'setstatus?status=available' & mpc enable 2"
+    Mod2 + XF86Launch1
+
+# simple screen lock without stoping music
+"purple-remote 'setstatus?status=away' & xscreensaver-command -lock ; purple-remote 'setstatus?status=available'"
+   Mod2 + Help
+
+# notebook backlight
+"sudo /home/czaja/bin/vaio-f11s1e-backlight.sh up"
+    XF86MonBrightnessUp
+"sudo /home/czaja/bin/vaio-f11s1e-backlight.sh down"
+    XF86MonBrightnessDown
+
