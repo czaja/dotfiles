@@ -1,0 +1,7 @@
+# .screenrc
+# by Krzysztof Czajkowski (http://czajkowski.edu.pl)
+# Updates: http://github.com/czaja/dotfiles/
+# License: public domain
+
+caption always "%{g0} %{g0}%-Lw%{g0}%50>%{g0}%n%f* %t%{-}%+Lw%< | %l | %{g0}%c:%s | %d.%m.%Y%{- g0}"
+defutf8 on
