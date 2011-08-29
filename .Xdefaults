@@ -3,6 +3,8 @@
 # Updates: http://github.com/czaja/dotfiles/
 # License: public domain
 
+# urxvt
+
 URxvt*termName: rxvt
 URxvt*title: czaja
 URxvt*scrollBar: false
@@ -41,7 +43,7 @@ URxvt*bolditalicFont: xft:Monospace:pixelsize=13:antialias=true:bold:italic:auto
 #URxvt.tabbed.tab-fg: 2
 #URxvt.tabbed.tab-bg: 0
 
-## xterm config
+# xterm config
 xterm*termName: xterm
 xterm*background: #000000
 xterm*foreground: #A8A8A8
