@@ -1,0 +1,41 @@
+# prompt colors
+local RED=$'%{\e[0;31m%}'
+local GREEN=$'%{\e[0;32m%}'
+local YELLOW='%{\e[0;33m%}'
+local BLUE=$'%{\e[0;34m%}'
+local PINK=$'%{\e[0;35m%}'
+local CYAN=$'%{\e[0;36m%}'
+local GREY=$'%{\e[1;30m%}'
+local NORMAL=$'%{\e[0m%}'
+
+# exporting prompt
+if [[ ${UID} == "0" ]]; then
+   if [[ ${HOST} == "erode" ]]; then
+      #promptinit
+      #prompt gentoo
+      RPROMPT="${BLUE}[${RED}%T${BLUE}]${NORMAL}"
+      export PS1="$(print "${BLUE}[${RED}%~${BLUE}]${RED} %(!.#.$) ${NORMAL}")"
+      #export PS1="$(print "${NORMAL}[${GREEN}%M${NORMAL}][${YELLOW}%~${NORMAL}]${RED} %(!.#.$) ${NORMAL}")"
+   else
+      #promptinit
+      #prompt gentoo
+      RPROMPT="${BLUE}[${RED}%T${BLUE}]${NORMAL}"
+      #export PS1="$(print "${GREY}[${YELLOW}%M${GREY}][${YELLOW}%~${GREY}]${YELLOW} %(!.#.$) ${NORMAL}")"
+      export PS1="$(print "${BLUE}[${RED}%M${BLUE}][${RED}%~${BLUE}]${RED} %(!.#.$) ${NORMAL}")"
+   fi
+else
+   if [[ ${HOST} == "erode" ]]; then
+      RPROMPT="${BLUE}[${GREEN}%T${BLUE}]${NORMAL}"
+      #export PS1="$(print "${GREY}[${YELLOW}%~${GREY}]${YELLOW} %(!.#.$) ${NORMAL}")"
+      export PS1="$(print "${BLUE}[${GREEN}%~${BLUE}]${GREEN} %(!.#.$) ${NORMAL}")"
+      #export PS1="$(print "${YELLOW}[${RED}%~${YELLOW}]${RED} %(!.#.$) ${NORMAL}")"
+      #export PS1="$(print "${NORMAL}[${RED}%M${NORMAL}][${YELLOW}%~${NORMAL}]${GREEN} %(!.#.$) ${NORMAL}")"
+      #export PS1="$(print "[${YELLOW}%~${NORMAL}]${GREEN} %(!.#.$) ${NORMAL}")"
+   else
+      #promptinit
+      #prompt gentoo
+      RPROMPT="${BLUE}[${GREEN}%T${BLUE}]${NORMAL}"
+      #export PS1="$(print "${GREY}[${YELLOW}%M${GREY}][${YELLOW}%~${GREY}]${YELLOW} %(!.#.$) ${NORMAL}")"
+      export PS1="$(print "${BLUE}[${GREEN}%M${BLUE}][${GREEN}%~${BLUE}]${GREEN} %(!.#.$) ${NORMAL}")"
+   fi
+fi

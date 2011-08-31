@@ -1,35 +1,29 @@
 # .zshrc
-# Author - Krzysztof Czajkowski <czaja@arker.pl>
-# 16.02.2010
+# Author - Krzysztof Czajkowski <krzysztof@czajkowski.edu.pl>
+# version 0.2 - 31.08.2011
 # Special thanks to cla <cla@gentoo.org>, which motivated me to 
 # create a config and from which lent a bit of code.
+# Special thanks to liDEL (http://lidel.org).
 # Updates: http://github.com/czaja/dotfiles/
 # License: public domain
 
-export ECHANGELOG_USER="Krzysztof Czajkowski <czaja@arker.pl>"
-
-# manuals in vim
-#export MANPAGER="col -b | vim -R -c 'set fileencoding=iso-8859-2 termencoding=utf-8 ft=man nomod nolist' -"
+export ECHANGELOG_USER="Krzysztof Czajkowski <krzysztof@czajkowski.edu.pl>"
 
 # history
 export HISTSIZE=10000
 HISTFILE=${HOME}/.history
 export SAVEHIST=$HISTSIZE
-#export HISTFILESIZE=999999
+setopt hist_ignore_all_dups
+setopt hist_expire_dups_first
+setopt hist_ignore_space
+setopt hist_no_store
+setopt inc_append_history
+setopt extended_history
+setopt hist_reduce_blanks
 #HISTTIMEFORMAT='%a, %d %b %Y %l:%M:%S%p %z '
 
-# prompt colors
-local RED=$'%{\e[0;31m%}'
-local GREEN=$'%{\e[0;32m%}'
-local YELLOW='%{\e[0;33m%}'
-local BLUE=$'%{\e[0;34m%}'
-local PINK=$'%{\e[0;35m%}'
-local CYAN=$'%{\e[0;36m%}'
-local GREY=$'%{\e[1;30m%}'
-local NORMAL=$'%{\e[0m%}'
-
 # autoload
-autoload -U promptinit colors compinit
+autoload -U promptinit colors compinit zmv # zmv -> smart mv: zmv '(*).lis' '$1.txt'
 compinit
 colors
 
@@ -38,41 +32,21 @@ if [ -r ${HOME}/.zshrc_local ]; then
 	. ${HOME}/.zshrc_local
 fi
 
-# exporting prompt
-if [[ ${UID} == "0" ]]; then
-        if [[ ${HOST} == "erode" ]]; then
-    		#promptinit
-    		#prompt gentoo
-		RPROMPT="${BLUE}[${RED}%T${BLUE}]${NORMAL}"
-		export PS1="$(print "${BLUE}[${RED}%~${BLUE}]${RED} %(!.#.$) ${NORMAL}")"
-    		#export PS1="$(print "${NORMAL}[${GREEN}%M${NORMAL}][${YELLOW}%~${NORMAL}]${RED} %(!.#.$) ${NORMAL}")"
-	else
-		#promptinit
-		#prompt gentoo
-		RPROMPT="${BLUE}[${RED}%T${BLUE}]${NORMAL}"
-		#export PS1="$(print "${GREY}[${YELLOW}%M${GREY}][${YELLOW}%~${GREY}]${YELLOW} %(!.#.$) ${NORMAL}")"
-		export PS1="$(print "${BLUE}[${RED}%M${BLUE}][${RED}%~${BLUE}]${RED} %(!.#.$) ${NORMAL}")"
-	fi
-else
-        if [[ ${HOST} == "erode" ]]; then
-                RPROMPT="${BLUE}[${GREEN}%T${BLUE}]${NORMAL}"
-                #export PS1="$(print "${GREY}[${YELLOW}%~${GREY}]${YELLOW} %(!.#.$) ${NORMAL}")"
-                export PS1="$(print "${BLUE}[${GREEN}%~${BLUE}]${GREEN} %(!.#.$) ${NORMAL}")"
-                #export PS1="$(print "${YELLOW}[${RED}%~${YELLOW}]${RED} %(!.#.$) ${NORMAL}")"
-                #export PS1="$(print "${NORMAL}[${RED}%M${NORMAL}][${YELLOW}%~${NORMAL}]${GREEN} %(!.#.$) ${NORMAL}")"
-                #export PS1="$(print "[${YELLOW}%~${NORMAL}]${GREEN} %(!.#.$) ${NORMAL}")"
-        else
-                #promptinit
-		#prompt gentoo
-		RPROMPT="${BLUE}[${GREEN}%T${BLUE}]${NORMAL}"
-		#export PS1="$(print "${GREY}[${YELLOW}%M${GREY}][${YELLOW}%~${GREY}]${YELLOW} %(!.#.$) ${NORMAL}")"
-		export PS1="$(print "${BLUE}[${GREEN}%M${BLUE}][${GREEN}%~${BLUE}]${GREEN} %(!.#.$) ${NORMAL}")"
-        fi
+if [ -r ${HOME}/.zshrc_prompt ]; then
+   . ${HOME}/.zshrc_prompt
+elif [ -r /home/czaja/.zshrc_prompt ] ; then
+   . /home/czaja/.zshrc_prompt
 fi
 
 # style
-#zstyle ':completion:*' use-cache on
-#zstyle ':completion:*' cache-path ~/.zsh/cache
+
+# completion cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh_cache
+
+# ignore completion functions for commands you don't have
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
 #zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
 #zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -83,7 +57,6 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 zstyle ':completion:*' remove-all-dups true
 zstyle ':completion:*' use-cache true
-setopt complete_in_word
 zstyle ':completion:*' completer _complete _prefix
 zstyle ':completion:*' add-space true
 #zstyle ':completion:*' completer _complete _prefix _approximate
@@ -93,9 +66,12 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format '%BNic nie znaleziono dla: %d%b'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# PID completion: kill X<TAB>
 zstyle ':completion:*:processes' command 'ps xw -o pid,tty,time,args'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) #([^ ]#) #([^ ]#)*=1;32=1;31=1;35=1;33'
 #zstyle ':completion:*:kill:*' force-list always
+
 zstyle ':completion:*' menu select=long-list select=1
 zstyle ':completion:*' list-prompt '%Bnie weszlo na ekran, przewijanie aktywne%b'
 zstyle ':completion:*' select-prompt '%BPrzewinieto %p%b'
@@ -104,40 +80,12 @@ zstyle ':completion:*' ignore-parents parent pwd
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
 zstyle ':completion:*' separate-sections true
 zle -C all-matches complete-word _generic
-bindkey '^Xx' all-matches
+bindkey '^Xx' all-matches # C-x-x
 zstyle ':completion:all-matches::::' completer _all_matches _complete _match
 zstyle ':completion:all-matches:*' insert true
 zstyle ':completion:all-matches:*' old-matches true
 
-# Repair HOME/END keys and others.
-
-#autoload zkbd
-#function zkbd_file() {
-#    [[ -f ~/.zkbd/${TERM}-${VENDOR}-${OSTYPE} ]] && printf '%s'
-#    ~/".zkbd/${TERM}-${VENDOR}-${OSTYPE}" && return 0
-#    [[ -f ~/.zkbd/${TERM}-${DISPLAY}          ]] && printf '%s'
-#    ~/".zkbd/${TERM}-${DISPLAY}"          && return 0
-#    return 1
-#}
-#
-#[[ ! -d ~/.zkbd ]] && mkdir ~/.zkbd
-#keyfile=$(zkbd_file)
-#ret=$?
-#if [[ ${ret} -ne 0 ]]; then
-#	zkbd
-#	keyfile=$(zkbd_file)
-#	ret=$?
-#fi
-#if [[ ${ret} -eq 0 ]] ; then
-#	source "${keyfile}"
-#else
-#	printf 'Failed to setup keys using zkbd.\n'
-#fi
-#unfunction zkbd_file; unset keyfile ret
-
-# create a zkbd compatible hash;
-# to add other keys to this hash, see: man 5 terminfo
-
+# Fix keyboard
 typeset -A key
 
 key[Home]=${terminfo[khome]}
@@ -169,23 +117,20 @@ unset k
 
 bindkey "^R" history-incremental-search-backward
 
-#unsetopt MULTIBYTE
-
 # few things
 setopt AUTO_CD
 setopt CORRECT
 setopt MENU_COMPLETE
 setopt CHECK_JOBS
 setopt PRINT_EXIT_VALUE
-setopt HIST_IGNORE_SPACE
-setopt HIST_IGNORE_ALL_DUPS
 setopt NOTIFY
 setopt CORRECT_ALL
 setopt SHORT_LOOPS
 setopt NO_HUP
-setopt extended_history
 setopt extended_glob
 setopt interactive_comments
+setopt auto_remove_slash
+setopt complete_in_word
 setopt auto_remove_slash
 
 umask 022
@@ -196,54 +141,78 @@ WATCHFMT="User %n has %a on tty %l at %T %W"
 
 # Display path in titlebar of terms.
 [[ -t 1 ]] || return
-        case $TERM in
-                *xterm*|*rxvt*|(dt|k|E)term)
-                precmd() {
-                        print -Pn "\e]2;[%n] : [%m] : [%~]\a"
-                    }
-                preexec() {
-                    print -Pn "\e]2;[%n] : [%m] : [%~] : [ $1 ]\a"
-                }
-        ;; 
-        esac 
+   case $TERM in
+      *xterm*|*rxvt*|(dt|k|E)term)
+      precmd() {
+         print -Pn "\e]2;[%n] : [%m] : [%~]\a"
+      }
+      preexec() {
+         print -Pn "\e]2;[%n] : [%m] : [%~] : [ $1 ]\a"
+      }
+      ;; 
+   esac 
 
-# aliases
-if [[ $(uname) == "Linux" ]]; then
+# Linux or BSD ls
+if [[ $OSTYPE = linux* ]]; then
     alias ls="ls --color=auto --classify $* --group-directories-first"
     alias ll="ls -lh --color=auto --classify $* --group-directories-first"
     alias la="ls -lha --color=auto --classify $* --group-directories-first"
     alias grep='grep --color=auto'
-else
-# freebsd
-    CLICOLOR="YES";    export CLICOLOR                                                                                                                            
-    LSCOLORS="ExGxFxdxCxDxDxhbadExEx";    export LSCOLORS
+elif [[ $OSTYPE = freebsd* ]]; then 
+    export CLICOLOR="YES"
+    export LSCOLORS="ExGxFxdxCxDxDxhbadExEx"
     alias ls="ls -GF"
     alias ll="ls -lhGF"
     alias la="ls -lhaGF"
 fi
 
-# ls colors
-#if [ "$TERM" != "dumb" ]; then
-#    #eval "`dircolors -b`"
-#    alias ls="ls --color=auto --classify $*"
-#    alias grep='grep --color=auto'
-#    #alias dir='ls --color=auto --format=vertical'
-#    #alias vdir='ls --color=auto --format=long'
-#fi
-
 # colors
-if [[ -f ~/.dir_colors ]]; then
-            eval `dircolors -b ~/.dir_colors`
-else
-        if [[ -f /etc/DIR_COLORS ]]; then
-            eval `dircolors -b /etc/DIR_COLORS`
-#else 
-#	eval "`dircolors -b`"
-	fi
+if [ -x /usr/bin/dircolors ]; then
+   if [[ -f ~/.dir_colors ]]; then
+      eval `dircolors -b ~/.dir_colors`
+   elif [[ -f /etc/DIR_COLORS ]]; then
+      eval `dircolors -b /etc/DIR_COLORS`
+   else 
+      eval `dircolors`
+   fi
 fi
 
 # exporting colors
 export GREP_COLOR=31
+
+# even more colour-candy with app-misc/grc (http://goo.gl/2z2j)
+if [ "$TERM" != dumb ] && [ -x /usr/bin/grc ] ; then
+   alias cl='/usr/bin/grc -es --colour=auto'
+   alias configure='cl ./configure'
+   alias diff='cl diff'
+   alias gcc='cl gcc'
+   alias g++='cl g++'
+   alias as='cl as'
+   alias gas='cl gas'
+   alias ld='cl ld'
+   alias netstat='cl netstat'
+   alias ping='cl ping'
+fi
+
+# MC chdir enhancement under Gentoo
+if [ -f /usr/share/mc/mc.gentoo ]; then
+   . /usr/share/mc/mc.gentoo
+fi
+
+# aliases
+alias psaux="ps aux"
+alias rr="rm -Rf"
+alias dv="dirs -v"
+alias recent="ls -rl *(D.om[1,10])"
+alias grep="grep --color=auto "
+alias wcat="wget -q -O -"
+alias whatismyip="wget -O- -q whatismyip.org"
+alias tlzma="tar -c $* | lzma -c9 > $1.tar.lzma" # deprecated?
+alias du_dir="find . -maxdepth 1 -type d | xargs du -sb | sort -n"
+alias png2jpg="mogrify -format jpg -quality 90 *.png"
+alias e="emerge"
+alias d='dirs -v'
+alias c="cd ~ ; clear"
 
 # global aliases
 alias -g '...'='../..'
@@ -254,13 +223,12 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g G="| grep"
 alias -g L="| less"
-alias -g mv="mv -v"
-alias -g rm="rm -v"
-alias -g cp="cp -v"
+alias -g mv="nocorrect mv -v"
+alias -g rm="nocorrect rm -v"
+alias -g cp="nocorrect cp -v"
 alias -g sshl2="luit -x -encoding 'ISO 8859-2' ssh"
 
 # editor
-#export EDITOR="/usr/bin/mcedit"
 export EDITOR="/usr/bin/vim"
 
 # weird commands for my use.
@@ -273,6 +241,12 @@ status() {
         echo "System: $(cat /etc/[A-Za-z]*[_-][rv]e[lr]*)"
         echo "Kernel: $(uname -r)"
 	echo "Uptime:$(uptime)"
+}
+
+# incognito mode
+incognito() {
+   export HISTFILE=/dev/null
+   PROMPT='incognito> '
 }
 
 # youtube with mplayer
@@ -309,6 +283,31 @@ genthumbs () {
         echo "
   </body>
 </html>" >> index.html
+}
+
+# vim as a man-page reader
+# # put in your ~/.vimrc :
+# # autocmd FileType man setlocal ro nonumber nolist fdm=indent fdn=2 sw=4 foldlevel=2 | nmap q :quit<CR>
+vman() {
+   if [ $# -eq 0 ]; then
+      /usr/bin/man
+   else
+      if man -w $* >/dev/null 2>/dev/null
+      then
+         /usr/bin/man $* | col -b | vim -c 'set ft=man nomod' -
+      else
+         echo No man page for $*
+      fi
+   fi
+}
+
+# simple notifier
+saydone () {
+   if [ $? = 0 ]; then
+      notify-send -i gtk-dialog-info "done :-)"
+   else
+      notify-send -i gtk-dialog-info --urgency=critical "failed :-("
+   fi
 }
 
 # files with space in the name are evil!
@@ -361,7 +360,7 @@ pwn() {
 	    fi
 echo "http://so.pwn.pl/${opt}"
 }
-                                                                                                                                                                                                                                      
+
 # list only file that are videos
 lvid() {
         local -a videos
@@ -383,8 +382,17 @@ die() {
 }
 
 # to update .zshrc from terminal
-updaterc() {
-        wget http://github.com/czaja/dotfiles/raw/master/.zshrc -O ${1}/.zshrc
+updaterc-zsh() {
+   ping -q -c1 github.com && \
+   cp ~/.zshrc ~/.zshrc.old && \
+   wget http://github.com/czaja/dotfiles/raw/master/.zshrc -O ~/.zshrc && \
+   wget http://github.com/czaja/dotfiles/raw/master/.zshrc_prompt -O ~/.zshrc_prompt
+}
+
+updaterc-vim() {
+   ping -q -c1 github.com && \
+   cp ~/.zshrc ~/.zshrc.old && \
+   wget http://github.com/czaja/dotfiles/raw/master/.vimrc -O ~/.vimrc
 }
 
 # distcc options for automake

@@ -113,6 +113,10 @@
 	nmap _S :%s/^\s\+//<CR>
 " }
 
+" MAN wrapper {
+   autocmd FileType man setlocal ro nonumber nolist fdm=indent fdn=2 sw=4 foldlevel=2 | nmap q :quit<CR>
+" }
+
 " MRU {
    " http://www.vim.org/scripts/script.php?script_id=521
    let MRU_File = '/home/czaja/.vim_mru_files'
