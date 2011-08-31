@@ -213,6 +213,9 @@ alias png2jpg="mogrify -format jpg -quality 90 *.png"
 alias e="emerge"
 alias d='dirs -v'
 alias c="cd ~ ; clear"
+alias mv="nocorrect mv -v"
+alias rm="nocorrect rm -v"
+alias cp="nocorrect cp -v"
 
 # global aliases
 alias -g '...'='../..'
@@ -223,9 +226,6 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g G="| grep"
 alias -g L="| less"
-alias -g mv="nocorrect mv -v"
-alias -g rm="nocorrect rm -v"
-alias -g cp="nocorrect cp -v"
 alias -g sshl2="luit -x -encoding 'ISO 8859-2' ssh"
 
 # editor
