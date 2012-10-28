@@ -15,7 +15,7 @@
 " Eyelook {
 	set t_Co=256	                 " force 256 term (x11-terms/rxvt-unicode +xterm-color under Gentoo)
 	syntax on
-	"set number
+	set number
 	"colorscheme twilight	        " http://www.vim.org/scripts/script.php?script_id=1677
 	"colorscheme xoria256	        " http://svn.ungrund.org/system/skel/.vim/colors/xoria256.vim
    colorscheme desert              " http://fugal.net/vim/colors/desert.vim
@@ -66,7 +66,7 @@
 	set infercase                   " case inferred by default
 	set smartcase                   " if there are caps, go case-sensitive
 	set shiftround                  " when at 3 spaces, and I hit > ... go to 4, not 5
-	"set mouse=a                     " use mouse everywhere
+	set mouse+=a                    " use mouse everywhere, dont copy line numbers :)
                                    " Highlight redundant whitespaces
 	highlight RedundantSpaces ctermbg=blue guibg=blue
 	match RedundantSpaces /\s\+$\| \+\ze\t/
